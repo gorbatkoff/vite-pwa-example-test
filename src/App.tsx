@@ -3,6 +3,14 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 
+async function showBatteryLevel() {
+  if (navigator.getBattery) {
+    const battery = await navigator.getBattery();
+    alert(`Уровень заряда: ${Math.round(battery.level * 100)}% 🔋`);
+  } else {
+    alert("Battery API не поддерживается этим устройством.");
+  }
+}
 function triggerVibration() {
   if ("vibrate" in navigator) {
     navigator.vibrate(200); // Вибрация длительностью 200 миллисекунд
@@ -10,6 +18,30 @@ function triggerVibration() {
   } else {
     console.log("Вибрация не поддерживается на этом устройстве.");
   }
+}
+
+async function toggleFlashlight() {
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    const stream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "environment" },
+    });
+    const track = stream.getVideoTracks()[0];
+    const capabilities = track.getCapabilities();
+
+    if (capabilities.torch) {
+      track.applyConstraints({ advanced: [{ torch: true }] });
+      alert("Вспышка включена! 🔦");
+    } else {
+      alert("Фонарик не поддерживается.");
+    }
+  } else {
+    alert("Нет доступа к устройству.");
+  }
+}
+
+function speakText() {
+  const msg = new SpeechSynthesisUtterance("Привет! Это работает!");
+  window.speechSynthesis.speak(msg);
 }
 
 function App() {
@@ -35,9 +67,9 @@ function App() {
         >
           count is {count}
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <button onClick={showBatteryLevel}>Battery</button>
+        <button onClick={toggleFlashlight}>Фонарик</button>
+        <button onClick={speakText}>Speach</button>
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
