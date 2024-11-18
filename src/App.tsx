@@ -4,7 +4,9 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 
 async function showBatteryLevel() {
+  // @ts-ignore
   if (navigator.getBattery) {
+    // @ts-ignore
     const battery = await navigator.getBattery();
     alert(`Уровень заряда: ${Math.round(battery.level * 100)}% 🔋`);
   } else {
@@ -27,8 +29,10 @@ async function toggleFlashlight() {
     });
     const track = stream.getVideoTracks()[0];
     const capabilities = track.getCapabilities();
+    // @ts-ignore
 
     if (capabilities.torch) {
+      // @ts-ignore
       track.applyConstraints({ advanced: [{ torch: true }] });
       alert("Вспышка включена! 🔦");
     } else {
