@@ -11,6 +11,20 @@ const manifest = {
     "icon512_maskable.png",
     "vite.svg",
   ],
+  screenshots: [
+    {
+      src: "/screenshots/desktop.png",
+      sizes: "1919x927",
+      type: "image/png",
+      form_factor: "wide",
+    },
+    {
+      src: "/screenshots/mobile.png",
+      sizes: "450x811",
+      type: "image/png",
+      form_factor: "narrow",
+    },
+  ],
   icons: [
     {
       purpose: "maskable",
